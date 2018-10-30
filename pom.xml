@@ -12,5 +12,6 @@
         <description>Web Benchmarks</description>
 
         <modules>
+			<module>webmvc-benchmark</module>
         </modules>
 </project>
