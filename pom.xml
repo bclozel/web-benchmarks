@@ -13,5 +13,6 @@
 
         <modules>
 			<module>webmvc-benchmark</module>
+			<module>webflux-benchmark</module>
         </modules>
 </project>
