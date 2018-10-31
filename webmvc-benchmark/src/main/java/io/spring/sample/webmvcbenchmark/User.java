@@ -16,13 +16,33 @@
 
 package io.spring.sample.webmvcbenchmark;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+public class User {
 
-@SpringBootApplication
-public class WebmvcBenchmarkApplication {
+	private String id;
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebmvcBenchmarkApplication.class, args);
+	private String name;
+
+	public User() {
+	}
+
+	public User(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
