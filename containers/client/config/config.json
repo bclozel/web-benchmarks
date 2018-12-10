@@ -1,0 +1,52 @@
+{
+  "max_threads": 30,
+  "sleep_duration": 10,
+  "warmup_duration": 15,
+  "plans" : {
+    "text": {
+      "name": "Simple text/plain response",
+      "endpoint": "/text",
+      "accept": "text/plain",
+      "script": "empty.lua",
+      "connections": 100,
+      "rates": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000],
+      "duration": 20
+    },
+    "echo": {
+      "name": "Echo endpoint",
+      "endpoint": "/echo",
+      "accept": "text/plain",
+      "script": "echo.lua",
+      "connections": 100,
+      "rates": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000],
+      "duration": 20
+    },
+    "createuser": {
+      "name": "Send a JSON Payload",
+      "endpoint": "/user",
+      "accept": "application/json",
+      "script": "createuser.lua",
+      "connections": 100,
+      "rates": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000],
+      "duration": 20
+    },
+    "readuser": {
+      "name": "Read a JSON Payload",
+      "endpoint": "/user/bchmark",
+      "accept": "application/json",
+      "script": "empty.lua",
+      "connections": 100,
+      "rates": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000],
+      "duration": 20
+    },
+    "htmlview": {
+      "name": "Read a HTML view",
+      "endpoint": "/home",
+      "accept": "text/html",
+      "script": "empty.lua",
+      "connections": 100,
+      "rates": [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000],
+      "duration": 20
+    }
+  }
+}
