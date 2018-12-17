@@ -1,0 +1,199 @@
+<!--
+  ~ Copyright 2002-2018 the original author or authors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Benchmark Results</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" rel="stylesheet">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="field has-addons">
+            <div class="control">
+                <input id="gist-id" class="input" type="text" placeholder="Gist Id" size="35">
+            </div>
+            <div class="control">
+                <a id="fetch-btn" class="button is-info">Load Gist Data</a>
+            </div>
+        </div>
+        <h1 class="title" id="title">Benchmark results</h1>
+        <div class="control">
+            <div class="select">
+                <select id="files-sel">
+                    <option>Select dropdown</option>
+                    <option>With options</option>
+                </select>
+            </div>
+        </div>
+        <div id="graph" style="height: 370px; width: 100%;"></div>
+        <p>Displaying percentiles: 0%, 10%, 50%, 95%, 99.9%</p>
+    </div>
+</section>
+</body>
+<script src="./canvasjs.min.js"></script>
+<script>
+    function fetchGist(id) {
+        return fetch(`https://api.github.com/gists/${id}`)
+            .then(function (response) {
+                return response.json();
+            });
+    }
+
+    function displayResult(title, result) {
+        document.querySelector("#title").innerText = title;
+        let data = result.runs.map(run => {
+            return {"label": run.rate, "y": run.data};
+        });
+        var chart = new CanvasJS.Chart("graph", {
+            exportEnabled: true,
+            title: {
+                text: result.title
+            },
+            axisX: {
+                title: "Request rate (req/s)",
+            },
+            axisY: {
+                title: "Latency (in ms)",
+                logarithmic: true
+            },
+            data: [{
+                type: "boxAndWhisker",
+                upperBoxColor: "#FFC28D",
+                lowerBoxColor: "#9ECCB8",
+                color: "black",
+                dataPoints: data
+            }]
+        });
+        chart.render();
+    }
+
+    class Parser {
+
+        constructor(percentiles) {
+            this.States = {
+                SKIPPING: 1,
+                RUN_HEADER: 2,
+                START_DATA: 3,
+                END_DATA: 4,
+            };
+            this.percentiles = percentiles;
+            this.TITLE_EXP = /Running Benchmark for: (.*) at rate ([0-9]*)/;
+            this.VALUES_EXP = /\s*Value.*/;
+            this.DATA_EXP = /\s*([\d.]*)\s*(\d\.\d{4}).*/;
+            this.ENDDATA_EXP = /#.*/;
+        }
+
+        parse(fileName, content) {
+            let lines = content.match(/[^\r\n]+/g);
+            let state = this.States.SKIPPING;
+            const runs = [];
+            let title, rate, data = [];
+            lines.forEach(line => {
+                switch (state) {
+                    case this.States.SKIPPING:
+                        if (this.TITLE_EXP.test(line)) {
+                            let matches = line.match(this.TITLE_EXP);
+                            title = matches[1];
+                            rate = matches[2];
+                            state = this.States.RUN_HEADER;
+                        }
+                        break;
+                    case this.States.RUN_HEADER:
+                        if (this.VALUES_EXP.test(line)) {
+                            state = this.States.START_DATA;
+                        }
+                        break;
+                    case this.States.START_DATA:
+                        if (this.DATA_EXP.test(line)) {
+                            let matches = line.match(this.DATA_EXP);
+                            if (this.percentiles.includes(matches[2])) {
+                                data[this.percentiles.indexOf(matches[2])] = parseFloat(matches[1]);
+                            }
+                        } else if (this.ENDDATA_EXP.test(line)) {
+                            runs.push(new BenchmarkRun(rate, data));
+                            data = [];
+                            state = this.States.SKIPPING;
+                        }
+                        break;
+                }
+            });
+            return new BenchmarkResult(fileName, title, runs);
+        }
+
+    }
+
+    class BenchmarkResult {
+
+        constructor(fileName, title, runs) {
+            this.fileName = fileName;
+            this.title = title;
+            this.runs = runs;
+        }
+
+    }
+
+    class BenchmarkRun {
+
+        constructor(rate, data) {
+            this.rate = rate;
+            this.data = data;
+        }
+    }
+
+    function updateSelector(gist) {
+        let select = document.querySelector('select[id="files-sel"]');
+        let options = Object.keys(gist.files)
+            .map(fileName => `<option value="${fileName}">${fileName}</option>`)
+            .reduce((prev, current) => prev + current);
+        select.innerHTML = options;
+    }
+
+    function changeSelectionHandler() {
+        let value = document.querySelector("select").selectedOptions[0].value;
+        let result = parser.parse(value, currentGist.files[value].content);
+        displayResult(currentGist.description, result);
+    }
+
+    function clickButtonHandler() {
+        fetchGist(document.querySelector('input[id="gist-id"]').value)
+            .then(g => {
+                currentGist = g;
+                updateSelector(currentGist);
+                changeSelectionHandler();
+            });
+    }
+
+    let currentGist;
+    const percentiles = ["0.0000", "0.1000", "0.9500", "0.9990", "0.5000"];
+    const parser = new Parser(percentiles);
+
+    window.onload = function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const gistId= urlParams.get('id');
+        if (gistId) {
+            document.querySelector('input[id="gist-id"]').value = gistId;
+            clickButtonHandler()
+        }
+        document.querySelector('select[id="files-sel"]').onchange=changeSelectionHandler;
+        document.querySelector('a[id="fetch-btn"]').onclick=clickButtonHandler;
+    }
+
+</script>
+</html>
