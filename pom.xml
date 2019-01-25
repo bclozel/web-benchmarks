@@ -12,6 +12,7 @@
         <description>Web Benchmarks</description>
 
         <modules>
+			<module>reactornetty-benchmark</module>
 			<module>webmvc-benchmark</module>
 			<module>webflux-benchmark</module>
 			<module>webfluxfn-benchmark</module>
