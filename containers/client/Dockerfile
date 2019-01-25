@@ -1,20 +1,23 @@
-FROM node:11-alpine
+FROM google/cloud-sdk:alpine
 
-# Compile wrk2
-RUN apk add --update alpine-sdk openssl-dev && apk add --no-cache git
-RUN git clone https://github.com/giltene/wrk2.git && cd wrk2 && make && cd ..
-RUN mv wrk2/wrk /bin/wrk && rm -rf wrk2
+RUN apk add --no-cache openjdk8 unzip
 
 # Install client application
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
-COPY . .
+WORKDIR /opt/bench/
+
+RUN curl -LsS https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/3.0.2/gatling-charts-highcharts-bundle-3.0.2-bundle.zip > gatling.zip \
+      && unzip gatling.zip && mv gatling-charts-highcharts-bundle-3.0.2 gatling \
+      && rm -rf gatling/user-files/* gatling.zip
+    
+COPY gatling/ /opt/bench/gatling/user-files/
+COPY run.sh /opt/bench/
 
 # Replace with inline env variables when running the container
-ENV GITHUB_TOKEN=default
-ENV SLACK_WEBHOOK_URL=default
 ENV APP_NAME=spring-app.jar
 ENV SERVER_HOST=localhost:8080
+ENV SIMULATIONS="TextPlain"
+ENV CONCURRENCY=512
+ENV SLACK_WEBHOOK_URL=default
+ENV BUCKET=default
 
-CMD ["sh", "-c", "node bin/client.js -v --gist --slack ${APP_NAME} ${SERVER_HOST}"]
+CMD ["sh", "-c", "/opt/bench/run.sh ${APP_NAME} ${SERVER_HOST} ${SIMULATIONS} ${CONCURRENCY}"]
