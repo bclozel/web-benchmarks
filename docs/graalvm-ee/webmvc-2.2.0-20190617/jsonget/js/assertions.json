@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonGet",
+  "simulationId": "jsonget",
+  "start": 1560803251364,
+  "description": "Benchmark for application webmvc-2.2.0-20190617-graalvm-ee",
+  "scenarios": ["Get JSON payload"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonPost",
+  "simulationId": "jsonpost",
+  "start": 1560804773910,
+  "description": "Benchmark for application webmvc-2.2.0-20190617-graalvm-ee",
+  "scenarios": ["Post JSON and receive JSON payload"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "TextPlain",
+  "simulationId": "textplain",
+  "start": 1560799330342,
+  "description": "Benchmark for application webflux-2.2.0-20190617-graalvm-ee",
+  "scenarios": ["Receive plain Text"],
+  "assertions": [
+
+  ]
+}

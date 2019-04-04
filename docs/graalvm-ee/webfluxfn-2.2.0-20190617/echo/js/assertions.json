@@ -1,0 +1,10 @@
+{
+  "simulation": "Echo",
+  "simulationId": "echo",
+  "start": 1560801741826,
+  "description": "Benchmark for application webfluxfn-2.2.0-20190617-graalvm-ee",
+  "scenarios": ["Send text to an echo endpoint"],
+  "assertions": [
+
+  ]
+}

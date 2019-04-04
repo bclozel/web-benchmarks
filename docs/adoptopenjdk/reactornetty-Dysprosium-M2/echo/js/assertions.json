@@ -1,0 +1,10 @@
+{
+  "simulation": "Echo",
+  "simulationId": "echo",
+  "start": 1560791704134,
+  "description": "Benchmark for application reactornetty-Dysprosium-M2-adoptopenjdk",
+  "scenarios": ["Send text to an echo endpoint"],
+  "assertions": [
+
+  ]
+}

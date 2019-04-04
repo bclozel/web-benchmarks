@@ -1,0 +1,10 @@
+{
+  "simulation": "HtmlGet",
+  "simulationId": "htmlget",
+  "start": 1560797025443,
+  "description": "Benchmark for application reactornetty-0.8.6-adoptopenjdk",
+  "scenarios": ["Get HTML view"],
+  "assertions": [
+
+  ]
+}

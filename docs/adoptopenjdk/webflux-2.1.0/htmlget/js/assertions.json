@@ -1,0 +1,10 @@
+{
+  "simulation": "HtmlGet",
+  "simulationId": "htmlget",
+  "start": 1560805528942,
+  "description": "Benchmark for application webflux-2.1.0-adoptopenjdk",
+  "scenarios": ["Get HTML view"],
+  "assertions": [
+
+  ]
+}

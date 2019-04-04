@@ -1,0 +1,10 @@
+{
+  "simulation": "HtmlGet",
+  "simulationId": "htmlget",
+  "start": 1560806270350,
+  "description": "Benchmark for application webmvc-2.2.0-20190617-graalvm-ce",
+  "scenarios": ["Get HTML view"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "TextPlain",
+  "simulationId": "textplain",
+  "start": 1560790670424,
+  "description": "Benchmark for application reactornetty-0.8.6-adoptopenjdk",
+  "scenarios": ["Receive plain Text"],
+  "assertions": [
+
+  ]
+}

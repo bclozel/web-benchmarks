@@ -1,0 +1,10 @@
+{
+  "simulation": "Echo",
+  "simulationId": "echo",
+  "start": 1560801715810,
+  "description": "Benchmark for application webmvc-2.2.0-20190617-adoptopenjdk",
+  "scenarios": ["Send text to an echo endpoint"],
+  "assertions": [
+
+  ]
+}

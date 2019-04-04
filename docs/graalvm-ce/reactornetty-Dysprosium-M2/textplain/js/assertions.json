@@ -1,0 +1,10 @@
+{
+  "simulation": "TextPlain",
+  "simulationId": "textplain",
+  "start": 1560790500625,
+  "description": "Benchmark for application reactornetty-Dysprosium-M2-graalvm-ce",
+  "scenarios": ["Receive plain Text"],
+  "assertions": [
+
+  ]
+}

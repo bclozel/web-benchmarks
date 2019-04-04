@@ -1,0 +1,10 @@
+{
+  "simulation": "Echo",
+  "simulationId": "echo",
+  "start": 1560792373302,
+  "description": "Benchmark for application reactornetty-0.8.6-graalvm-ce",
+  "scenarios": ["Send text to an echo endpoint"],
+  "assertions": [
+
+  ]
+}

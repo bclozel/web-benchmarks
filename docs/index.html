@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web benchmark results</title>
+</head>
+<body>
+
+<h1>Spring Web Benchmarks</h1>
+
+<div>
+    <p>Performed on a GCE Server, custom-4-8192 (4vCPU, 8GB RAM), ubuntu 18.10</p>
+    <h3>Benchmark scenario</h3>
+    <p>Each benchmark case starts with no traffic and does the following:</p>
+    <ol>
+        <li>increase the concurrency by 128 users (1 users = 1 connection) in 10 seconds</li>
+        <li>hold that concurrency level for 20 seconds</li>
+        <li>go to 1), unless the maximum concurrency of 4096 is reached</li>
+    </ol>
+    <h3>Benchmark cases</h3>
+    <ul>
+        <li>PlainText: server sends "text/plain" response body</li>
+        <li>Echo: clients sends "text/plain" and the server echoes that in the response</li>
+        <li>JsonGet: server sends a JSON payload</li>
+        <li>JsonPost: client sends a JSON payload, server deserializes it and replies with a JSON payload</li>
+        <li>HtmlGet: the server renders an HTML view with a templating engine</li>
+    </ul>
+</div>
+
+<h2>AdoptOpenJDK JDK8u212b04 HotSpot</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Application</th>
+        <th>PlainText</th>
+        <th>Echo</th>
+        <th>JsonGet</th>
+        <th>JsonPost</th>
+        <th>HtmlGet</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>webflux-2.1.0 <a href="adoptopenjdk/webflux-2.1.0/webflux-2-1-0-adoptopenjdk.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/webflux-2.1.0/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.1.0/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.1.0/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.1.0/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.1.0/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webflux-2.2.0.SNAPSHOT (2019-06-17) <a href="adoptopenjdk/webflux-2.2.0-20190617/webflux-2-2-0-20190617-adoptopenjdk.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/webflux-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webflux-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>reactornetty-0.8.6 <a href="adoptopenjdk/reactornetty-0.8.6/reactornetty-0-8-6.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/reactornetty-0.8.6/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-0.8.6/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-0.8.6/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-0.8.6/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-0.8.6/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>reactornetty-dysprosium-m2 <a href="adoptopenjdk/reactornetty-Dysprosium-M2/reactornettydysprosium-m2.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/reactornetty-Dysprosium-M2/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-Dysprosium-M2/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-Dysprosium-M2/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-Dysprosium-M2/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/reactornetty-Dysprosium-M2/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webfluxfn-2.1.0 <a href="adoptopenjdk/webfluxfn-2.1.0/webfluxfn-2-1-0-adoptopenjdk.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.1.0/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.1.0/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.1.0/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.1.0/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.1.0/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webfluxfn-2.2.0.SNAPSHOT (2019-06-17) <a href="adoptopenjdk/webfluxfn-2.2.0-20190617/webfluxfn-2-2-0-20190617-adoptopenjdk.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webfluxfn-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webmvc-2.1.0 <a href="adoptopenjdk/webmvc-2.1.0/webmvc-2-1-0-adoptopenjdk.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.1.0/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.1.0/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.1.0/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.1.0/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.1.0/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webmvc-2.2.0.SNAPSHOT (2019-06-17) <a href="adoptopenjdk/webmvc-2.2.0-20190617/webmvc-2-2-0-20190617-adoptopenjdk.png">CPU stats</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="adoptopenjdk/webmvc-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>GraalVM CE Linux amd64 19.0.0</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Application</th>
+        <th>PlainText</th>
+        <th>Echo</th>
+        <th>JsonGet</th>
+        <th>JsonPost</th>
+        <th>HtmlGet</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>webflux-2.2.0.SNAPSHOT (2019-06-17) <a href="graalvm-ce/webflux-2.2.0-20190617/webflux-2-2-0-20190617-graalvm-c.png">CPU stats</a></td>
+        <td><a href="graalvm-ce/webflux-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ce/webflux-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="graalvm-ce/webflux-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ce/webflux-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ce/webflux-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>reactornetty-0.8.6 <a href="graalvm-ce/reactornetty-0.8.6/reactornetty-0-8-6.png">CPU stats</a></td>
+        <td><a href="graalvm-ce/reactornetty-0.8.6/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-0.8.6/echo/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-0.8.6/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-0.8.6/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-0.8.6/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>reactornetty-dysprosium-m2 <a href="graalvm-ce/reactornetty-Dysprosium-M2/reactornettydysprosium-m2.png">CPU stats</a></td>
+        <td><a href="graalvm-ce/reactornetty-Dysprosium-M2/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-Dysprosium-M2/echo/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-Dysprosium-M2/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-Dysprosium-M2/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ce/reactornetty-Dysprosium-M2/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webfluxfn-2.2.0.SNAPSHOT (2019-06-17) <a href="graalvm-ce/webfluxfn-2.2.0-20190617/webfluxfn-2-2-0-20190617-graalvm-ce.png">CPU stats</a></td>
+        <td><a href="graalvm-ce/webfluxfn-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ce/webfluxfn-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="graalvm-ce/webfluxfn-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ce/webfluxfn-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ce/webfluxfn-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webmvc-2.2.0.SNAPSHOT (2019-06-17) <a href="graalvm-ce/webmvc-2.2.0-20190617/webmvc-2-2-0-20190617-graalvm-ce.png">CPU stats</a></td>
+        <td><a href="graalvm-ce/webmvc-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ce/webmvc-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="graalvm-ce/webmvc-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ce/webmvc-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ce/webmvc-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>GraalVM EE Linux amd64 19.0.1</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Application</th>
+        <th>PlainText</th>
+        <th>Echo</th>
+        <th>JsonGet</th>
+        <th>JsonPost</th>
+        <th>HtmlGet</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>webflux-2.2.0.SNAPSHOT (2019-06-17) <a href="graalvm-ee/webflux-2.2.0-20190617/webflux-2-2-0-20190617-graalvm-ee.png">CPU stats</a></td>
+        <td><a href="graalvm-ee/webflux-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ee/webflux-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="graalvm-ee/webflux-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ee/webflux-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ee/webflux-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>reactornetty-0.8.6 <a href="graalvm-ee/reactornetty-0.8.6/reactornetty-0-8-6.png">CPU stats</a></td>
+        <td><a href="graalvm-ee/reactornetty-0.8.6/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-0.8.6/echo/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-0.8.6/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-0.8.6/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-0.8.6/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>reactornetty-dysprosium-m2 <a href="graalvm-ee/reactornetty-Dysprosium-M2/reactornettydysprosium-m2.png">CPU stats</a></td>
+        <td><a href="graalvm-ee/reactornetty-Dysprosium-M2/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-Dysprosium-M2/echo/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-Dysprosium-M2/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-Dysprosium-M2/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ee/reactornetty-Dysprosium-M2/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webfluxfn-2.2.0.SNAPSHOT (2019-06-17) <a href="graalvm-ee/webfluxfn-2.2.0-20190617/webfluxfn-2-2-0-20190617-graalvm-ee.png">CPU stats</a></td>
+        <td><a href="graalvm-ee/webfluxfn-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ee/webfluxfn-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="graalvm-ee/webfluxfn-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ee/webfluxfn-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ee/webfluxfn-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    <tr>
+        <td>webmvc-2.2.0.SNAPSHOT (2019-06-17) <a href="graalvm-ee/webmvc-2.2.0-20190617/webmvc-2-2-0-20190617-graalvm-ee.png">CPU stats</a></td>
+        <td><a href="graalvm-ee/webmvc-2.2.0-20190617/textplain/index.html">results</a></td>
+        <td><a href="graalvm-ee/webmvc-2.2.0-20190617/echo/index.html">results</a></td>
+        <td><a href="graalvm-ee/webmvc-2.2.0-20190617/jsonget/index.html">results</a></td>
+        <td><a href="graalvm-ee/webmvc-2.2.0-20190617/jsonpost/index.html">results</a></td>
+        <td><a href="graalvm-ee/webmvc-2.2.0-20190617/htmlget/index.html">results</a></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

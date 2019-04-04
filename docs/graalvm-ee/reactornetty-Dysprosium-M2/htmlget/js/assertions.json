@@ -1,0 +1,10 @@
+{
+  "simulation": "HtmlGet",
+  "simulationId": "htmlget",
+  "start": 1560797231038,
+  "description": "Benchmark for application reactornetty-Dysprosium-M2-graalvm-ee",
+  "scenarios": ["Get HTML view"],
+  "assertions": [
+
+  ]
+}

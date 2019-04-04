@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonGet",
+  "simulationId": "jsonget",
+  "start": 1560793367454,
+  "description": "Benchmark for application reactornetty-Dysprosium-M2-adoptopenjdk",
+  "scenarios": ["Get JSON payload"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonGet",
+  "simulationId": "jsonget",
+  "start": 1560803304260,
+  "description": "Benchmark for application webfluxfn-2.2.0-20190617-graalvm-ee",
+  "scenarios": ["Get JSON payload"],
+  "assertions": [
+
+  ]
+}

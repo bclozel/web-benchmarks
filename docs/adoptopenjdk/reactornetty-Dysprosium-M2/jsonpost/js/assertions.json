@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonPost",
+  "simulationId": "jsonpost",
+  "start": 1560795123525,
+  "description": "Benchmark for application reactornetty-Dysprosium-M2-adoptopenjdk",
+  "scenarios": ["Post JSON and receive JSON payload"],
+  "assertions": [
+
+  ]
+}

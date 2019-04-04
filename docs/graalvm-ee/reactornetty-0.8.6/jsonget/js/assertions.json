@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonGet",
+  "simulationId": "jsonget",
+  "start": 1560793896586,
+  "description": "Benchmark for application reactornetty-0.8.6-graalvm-ee",
+  "scenarios": ["Get JSON payload"],
+  "assertions": [
+
+  ]
+}

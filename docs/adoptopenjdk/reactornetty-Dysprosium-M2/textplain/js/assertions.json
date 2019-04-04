@@ -1,0 +1,10 @@
+{
+  "simulation": "TextPlain",
+  "simulationId": "textplain",
+  "start": 1560789999495,
+  "description": "Benchmark for application reactornetty-Dysprosium-M2-adoptopenjdk",
+  "scenarios": ["Receive plain Text"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonPost",
+  "simulationId": "jsonpost",
+  "start": 1560804489734,
+  "description": "Benchmark for application webmvc-2.1.0-adoptopenjdk",
+  "scenarios": ["Post JSON and receive JSON payload"],
+  "assertions": [
+
+  ]
+}

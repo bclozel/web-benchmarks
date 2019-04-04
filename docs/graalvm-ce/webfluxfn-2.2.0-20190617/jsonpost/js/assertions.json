@@ -1,0 +1,10 @@
+{
+  "simulation": "JsonPost",
+  "simulationId": "jsonpost",
+  "start": 1560804952320,
+  "description": "Benchmark for application webfluxfn-2.2.0-20190617-graalvm-ce",
+  "scenarios": ["Post JSON and receive JSON payload"],
+  "assertions": [
+
+  ]
+}

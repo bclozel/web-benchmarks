@@ -1,0 +1,10 @@
+{
+  "simulation": "TextPlain",
+  "simulationId": "textplain",
+  "start": 1560799917558,
+  "description": "Benchmark for application webfluxfn-2.1.0-adoptopenjdk",
+  "scenarios": ["Receive plain Text"],
+  "assertions": [
+
+  ]
+}
