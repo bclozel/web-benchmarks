@@ -54,7 +54,7 @@ final class RouterFunctionConfig {
 	}
 
 	static BiFunction<HttpServerRequest, HttpServerResponse, Publisher<Void>> echo() {
-		return (req, res) -> res.send(req.receive().retain());
+		return (req, res) -> res.send(req.receive().retain().next());
 	}
 
 	static BiFunction<HttpServerRequest, HttpServerResponse, Publisher<Void>> home() {
