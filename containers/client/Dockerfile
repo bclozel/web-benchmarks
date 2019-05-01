@@ -16,8 +16,9 @@ COPY run.sh /opt/bench/
 ENV APP_NAME=spring-app.jar
 ENV SERVER_HOST=localhost:8080
 ENV SIMULATIONS="TextPlain"
-ENV CONCURRENCY=512
+ENV INCREMENT=128
+ENV STEPS=8
 ENV SLACK_WEBHOOK_URL=default
 ENV BUCKET=default
 
-CMD ["sh", "-c", "/opt/bench/run.sh ${APP_NAME} ${SERVER_HOST} ${SIMULATIONS} ${CONCURRENCY}"]
+CMD ["sh", "-c", "/opt/bench/run.sh ${APP_NAME} ${SERVER_HOST} ${SIMULATIONS} ${INCREMENT} ${STEPS}"]

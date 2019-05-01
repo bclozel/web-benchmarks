@@ -5,13 +5,14 @@ set -ev
 APP_NAME=$1
 SERVER_HOST=$2
 SIMULATIONS=$3
-CONCURRENCY=$4
+INCREMENT=$4
+STEPS=$5
 
 echo "Running simulations: ${SIMULATIONS} on application: ${APP_NAME}"
 
 for simulation in $(echo ${SIMULATIONS} | tr ";" "\n")
 do
-	JAVA_OPTS="-DbaseUrl=http://${SERVER_HOST} -Dconcurrency=${CONCURRENCY}" /opt/bench/gatling/bin/gatling.sh --run-description "Benchmark for application ${APP_NAME}" -s ${simulation}
+	JAVA_OPTS="-DbaseUrl=http://${SERVER_HOST} -Dincrement=${INCREMENT} -Dsteps=${STEPS}" /opt/bench/gatling/bin/gatling.sh --run-description "Benchmark for application ${APP_NAME}" -s ${simulation}
 	rm /opt/bench/gatling/results/**/simulation.log
 done
 
