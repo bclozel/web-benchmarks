@@ -41,7 +41,7 @@ function print_usage() {
   echo "download - download benchmark results from the gcloud storage bucket"
   echo "results  - list benchmark results in the gcloud storage bucket"
   echo ""
-  echo "Benchmark: ${0} start [application] | status | stop [application]"
+  echo "Benchmark: ${0} start [application] [jdk] | status | stop [application] [jdk]"
   echo "start    - run the benchmark for the given app"
   echo "status   - print status information about running instances"
   echo "stop     - stop and delete server instances for the given app"
@@ -80,9 +80,10 @@ status)
   
 start)
   APP_NAME=${2//\.jar/}
-  SERVER_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-server" | tr '[:upper:]' '[:lower:]'`
-  CLIENT_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-client" | tr '[:upper:]' '[:lower:]'`
-  echo "Creating server instance $SERVER_NAME"
+  JDK=${3}
+  SERVER_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-${JDK}-server" | tr '[:upper:]' '[:lower:]'`
+  CLIENT_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-${JDK}-client" | tr '[:upper:]' '[:lower:]'`
+  echo "Creating server instance $SERVER_NAME with $JDK"
 
   gcloud compute instances create ${SERVER_NAME} \
     --machine-type=${MACHINE_TYPE} \
@@ -93,7 +94,7 @@ start)
     --image-project=${IMAGE_PROJECT} \
     --network=${NETWORK} \
     --metadata-from-file startup-script=${STARTUP_SCRIPT} \
-    --metadata BUCKET=${BUCKET},APP_NAME=${APP_NAME}.jar
+    --metadata BUCKET=${BUCKET},JDK=${JDK},APP_NAME=${APP_NAME}.jar
 
   EXTERNAL_IP=`gcloud compute instances list --filter="name='$SERVER_NAME'" --format="value(networkInterfaces[0].accessConfigs[0].natIP)"`
   echo "Waiting for server to be available on $EXTERNAL_IP:8080"
@@ -109,13 +110,14 @@ start)
     --network=${NETWORK} \
     --container-image=${CLIENT_DOCKER_IMAGE} \
     --container-restart-policy=never \
-    --container-env=BUCKET=${BUCKET},APP_NAME=${APP_NAME},SERVER_HOST=${SERVER_HOST}:8080,SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL},SIMULATIONS=${SIMULATIONS},INCREMENT=${INCREMENT},STEPS=${STEPS}
+    --container-env=BUCKET=${BUCKET},APP_NAME="$APP_NAME-$JDK",SERVER_HOST=${SERVER_HOST}:8080,SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL},SIMULATIONS=${SIMULATIONS},INCREMENT=${INCREMENT},STEPS=${STEPS}
   ;;
 
 stop)
   APP_NAME=${2//\.jar/}
-  SERVER_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-server" | tr '[:upper:]' '[:lower:]'`
-  CLIENT_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-client" | tr '[:upper:]' '[:lower:]'`
+  JDK=${3}
+  SERVER_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-${JDK}-server" | tr '[:upper:]' '[:lower:]'`
+  CLIENT_NAME=`echo "$SERVER_PREFIX-${APP_NAME//./-}-${JDK}-client" | tr '[:upper:]' '[:lower:]'`
   gcloud compute instances delete ${SERVER_NAME} ${CLIENT_NAME} --zone=${ZONE}
   ;;
 
